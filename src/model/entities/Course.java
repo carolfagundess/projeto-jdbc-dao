@@ -8,17 +8,28 @@ import java.util.Objects;
  *
  * @author carol
  */
-public class Curso implements Serializable {
+public class Course implements Serializable {
     
     private Integer id;
     private String nome;
+    private String description;
+    private Integer workload;
+    private String area;     
 
-    public Curso() {
+    public Course() {
     }
 
-    public Curso(Integer id, String nome) {
+    public Course(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
+    }
+
+    public Course(Integer id, String nome, String description, Integer workload, String area) {
+        this.id = id;
+        this.nome = nome;
+        this.description = description;
+        this.workload = workload;
+        this.area = area;
     }
 
     public Integer getId() {
@@ -36,6 +47,33 @@ public class Curso implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getWorkload() {
+        return workload;
+    }
+
+    public void setWorkload(Integer workload) {
+        this.workload = workload;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+    
+    
+
 
     @Override
     public int hashCode() {
@@ -55,7 +93,7 @@ public class Curso implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Curso other = (Curso) obj;
+        final Course other = (Course) obj;
         return Objects.equals(this.id, other.id);
     }
 
