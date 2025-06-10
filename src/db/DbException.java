@@ -1,5 +1,5 @@
 
-package projeto.jdbc.db;
+package db;
 
 /**
  *
