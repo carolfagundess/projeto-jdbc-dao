@@ -15,7 +15,7 @@ public class Student implements Serializable {
     private Integer id;
     private String name;
     private String email;
-    private Integer phone;
+    private String phone;
     private Date birthDate;
     private String address;
     
@@ -24,7 +24,7 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(Integer id, String name, String email, Integer phone, Date birthDate, String address, Course course) {
+    public Student(Integer id, String name, String email, String phone, Date birthDate, String address, Course course) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -58,11 +58,11 @@ public class Student implements Serializable {
         this.email = email;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

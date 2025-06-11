@@ -34,28 +34,23 @@ public class StudentDaoJDBC implements StudentDao{
     }
 
     @Override
-    public StudentDao findById(Integer id) {
+    public Student findById(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         
         try {
-            st = conn.prepareStatement("SELECT student.*, course.Name as CourseName FROM student INNER JOIN course ON student.CouseId = course.Id WHERE course.Id = ? ");
+            st = conn.prepareStatement("""
+                                       SELECT student.*, course.nameCourse AS CourseName FROM student
+                                       INNER JOIN course ON student.idCourse = course.idCourse
+                                       WHERE course.idCourse = ?;""");
             
             st.setInt(1, id);
             rs = st.executeQuery();
             
             if (rs.next()) {
-                Course course = new Course();
-                course.setId(rs.getInt("idCourse"));
-                course.setNome(rs.getString("nameCourse"));
-                Student obj = new Student();
-                obj.setId(rs.getInt("idStudnent"));
-                obj.setEmail(rs.getString("emailStudent"));
-                obj.setPhone(rs.getInt("phoneStudent"));
-                obj.setBirthDate(rs.getDate("birthDateStudent"));
-                obj.setAddress(rs.getString("address"));
-                obj.setCourse(course);
-                
+                Course course = instantiateCourse(rs);
+                Student obj = instantiateStudent(rs, course);
+                return obj;
             } 
             return null;
         } catch (SQLException ex) {
@@ -70,6 +65,26 @@ public class StudentDaoJDBC implements StudentDao{
     @Override
     public List<StudentDao> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
+    //metodos auxiliares
+    private Course instantiateCourse(ResultSet rs) throws SQLException {
+        Course course = new Course();
+        course.setId(rs.getInt("idCourse"));
+        course.setNome(rs.getString("CourseName"));
+        return course;
+    }
+
+    private Student instantiateStudent(ResultSet rs, Course course) throws SQLException {
+        Student obj = new Student();
+        obj.setId(rs.getInt("idStudent"));
+        obj.setEmail(rs.getString("emailStudent"));
+        obj.setPhone(rs.getString("phoneStudent"));
+        obj.setBirthDate(rs.getDate("birthDateStudent"));
+        obj.setAddress(rs.getString("address"));
+        obj.setCourse(course);
+        return obj;
     }
     
 }
