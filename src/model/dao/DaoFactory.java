@@ -1,5 +1,6 @@
 package model.dao;
 
+import db.DB;
 import model.dao.impl.StudentDaoJDBC;
 
 /**
@@ -9,6 +10,6 @@ import model.dao.impl.StudentDaoJDBC;
 public class DaoFactory {
     
     public static StudentDao createStudentDao(){
-        return new StudentDaoJDBC();
+        return new StudentDaoJDBC(DB.getConnection());
     }
 }

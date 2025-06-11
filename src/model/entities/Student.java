@@ -2,7 +2,7 @@
 package model.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -15,24 +15,22 @@ public class Student implements Serializable {
     private Integer id;
     private String name;
     private String email;
-    private String phone;
-    private LocalDate birthDate;
+    private Integer phone;
+    private Date birthDate;
     private String address;
-    private String gender;  
     
     private Course course;
 
     public Student() {
     }
 
-    public Student(Integer id, String name, String email, String phone, LocalDate birthDate, String address, String gender, Course course) {
+    public Student(Integer id, String name, String email, Integer phone, Date birthDate, String address, Course course) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.birthDate = birthDate;
         this.address = address;
-        this.gender = gender;
         this.course = course;
     }
 
@@ -60,19 +58,19 @@ public class Student implements Serializable {
         this.email = email;
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -82,14 +80,6 @@ public class Student implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public Course getCourse() {
@@ -124,7 +114,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "Student{" + "id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", birthDate=" + birthDate + ", address=" + address + ", gender=" + gender + ", course=" + course + '}';
+        return "Student{" + "id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", birthDate=" + birthDate + ", address=" + address + ", course=" + course + '}';
     }
     
 }

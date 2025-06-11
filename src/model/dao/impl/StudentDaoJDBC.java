@@ -1,6 +1,8 @@
 
 package model.dao.impl;
 
+import db.DB;
+import db.DbException;
 import java.util.List;
 import model.dao.StudentDao;
 import model.entities.Student;
@@ -38,16 +40,31 @@ public class StudentDaoJDBC implements StudentDao{
         
         try {
             st = conn.prepareStatement("SELECT student.*, course.Name as CourseName FROM student INNER JOIN course ON student.CouseId = course.Id WHERE course.Id = ? ");
+            
             st.setInt(1, id);
             rs = st.executeQuery();
             
             if (rs.next()) {
                 Course course = new Course();
-                course.setId(rs.getInt("CourseId"));
-                course.setNome(rs.getString(""));
-            }
+                course.setId(rs.getInt("idCourse"));
+                course.setNome(rs.getString("nameCourse"));
+                Student obj = new Student();
+                obj.setId(rs.getInt("idStudnent"));
+                obj.setEmail(rs.getString("emailStudent"));
+                obj.setPhone(rs.getInt("phoneStudent"));
+                obj.setBirthDate(rs.getDate("birthDateStudent"));
+                obj.setAddress(rs.getString("address"));
+                obj.setCourse(course);
+                
+            } 
+            return null;
+        } catch (SQLException ex) {
+            throw  new DbException(ex.getMessage());
+        } finally{
+            //APROVEITANDO O MESMO DAO, MANTENDO A CONEXAO
+             DB.closeStatement(st);
+             DB.closeResultSet(rs);
         }
-        return null;
     }
 
     @Override
