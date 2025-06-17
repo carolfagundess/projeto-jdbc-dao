@@ -33,14 +33,14 @@ public class StudentDaoJDBC implements StudentDao {
                     + "VALUES "
                     + "(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, studentObj.getName());
-            st.setString(2,studentObj.getEmail());
+            st.setString(2, studentObj.getEmail());
             st.setString(3, studentObj.getPhone());
             st.setDate(4, new java.sql.Date(studentObj.getBirthDate().getTime()));
             st.setString(5, studentObj.getAddress());
             st.setInt(6, studentObj.getCourse().getId());
-            
+
             int rowsAffected = st.executeUpdate();
-            
+
             if (rowsAffected > 0) {
                 ResultSet result = st.getGeneratedKeys();
                 if (result.next()) {
@@ -48,23 +48,55 @@ public class StudentDaoJDBC implements StudentDao {
                     studentObj.setId(id);
                 }
                 DB.closeResultSet(result);
-            }else{
+            } else {
                 throw new DbException("Erro na insercao, sem linhas afetadas");
             }
         } catch (SQLException e) {
-           throw new DbException(e.getMessage());
-        }finally{
+            throw new DbException(e.getMessage());
+        } finally {
             DB.closeStatement(st);
-            
+
         }
     }
 
     @Override
     public void update(Student studentObj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE student"
+                    + "SET nameStudent = ?, emailStudent = ?, phoneStudent = ?, birthDateStudent = ?, address = ?, CourseId = ?)"
+                    + "WHERE idStudent = ?",
+                     Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, studentObj.getName());
+            st.setString(2, studentObj.getEmail());
+            st.setString(3, studentObj.getPhone());
+            st.setDate(4, new java.sql.Date(studentObj.getBirthDate().getTime()));
+            st.setString(5, studentObj.getAddress());
+            st.setInt(6, studentObj.getCourse().getId());
+            st.setInt(6, studentObj.getId());
+
+            st.executeUpdate();
+            
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+
+        }
     }
 
     @Override
     public void deleteById(Integer IdStudent) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM student WHERE idStudent = ?");
+            st.setInt(1, IdStudent);
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }finally{
+            DB.closeStatement(st);
+        }
     }
 
     @Override
