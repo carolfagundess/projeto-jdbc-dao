@@ -25,6 +25,38 @@ public class StudentDaoJDBC implements StudentDao {
 
     @Override
     public void insert(Student studentObj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "INSERT INTO student"
+                    + "(nameStudent, emailStudent, phoneStudent, birthDateStudent, address, CourseId)"
+                    + "VALUES "
+                    + "(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, studentObj.getName());
+            st.setString(2,studentObj.getEmail());
+            st.setString(3, studentObj.getPhone());
+            st.setDate(4, new java.sql.Date(studentObj.getBirthDate().getTime()));
+            st.setString(5, studentObj.getAddress());
+            st.setInt(6, studentObj.getCourse().getId());
+            
+            int rowsAffected = st.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                ResultSet result = st.getGeneratedKeys();
+                if (result.next()) {
+                    int id = result.getInt(1);
+                    studentObj.setId(id);
+                }
+                DB.closeResultSet(result);
+            }else{
+                throw new DbException("Erro na insercao, sem linhas afetadas");
+            }
+        } catch (SQLException e) {
+           throw new DbException(e.getMessage());
+        }finally{
+            DB.closeStatement(st);
+            
+        }
     }
 
     @Override
