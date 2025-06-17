@@ -2,6 +2,7 @@
 package model.dao;
 
 import java.util.List;
+import model.entities.Course;
 import model.entities.Student;
 
 /**
@@ -13,5 +14,6 @@ public interface StudentDao {
     void update(Student studentObj);
     void deleteById(Integer IdStudent);
     Student findById(Integer id);
-    List<StudentDao> findAll();
+    List<Student> findAll();
+    List<Student> findByCourse(Course course);
 }

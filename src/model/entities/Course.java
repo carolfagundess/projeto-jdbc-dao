@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Course implements Serializable {
     
     private Integer id;
-    private String nome;
+    private String nameCourse;
     private String description;
     private Integer workload;
     private String area;     
@@ -21,12 +21,12 @@ public class Course implements Serializable {
 
     public Course(Integer id, String nome) {
         this.id = id;
-        this.nome = nome;
+        this.nameCourse = nome;
     }
 
-    public Course(Integer id, String nome, String description, Integer workload, String area) {
+    public Course(Integer id, String nameCourse, String description, Integer workload, String area) {
         this.id = id;
-        this.nome = nome;
+        this.nameCourse = nameCourse;
         this.description = description;
         this.workload = workload;
         this.area = area;
@@ -40,12 +40,12 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNameCourse() {
+        return nameCourse;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNameCourse(String nome) {
+        this.nameCourse = nome;
     }
 
     public String getDescription() {
@@ -99,6 +99,6 @@ public class Course implements Serializable {
 
     @Override
     public String toString() {
-        return "Curso{" + "id=" + id + ", nome=" + nome + '}';
+        return "Curso{" + "id=" + id + ", nome=" + nameCourse + '}';
     }    
 }
